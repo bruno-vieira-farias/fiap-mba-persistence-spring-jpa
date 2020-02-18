@@ -1,9 +1,9 @@
-package br.com.fiap.mba.persistence.spring.persistence.domain;
+package br.com.fiap.mba.persistence.spring.persistence.domain.entity;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,11 +12,7 @@ public class Pedido {
     @ManyToOne
     private Cliente cliente;
 
-    @ManyToOne
+    @ManyToMany
     private List<ItemPedido> itens;
-
-
-
-
 
 }
