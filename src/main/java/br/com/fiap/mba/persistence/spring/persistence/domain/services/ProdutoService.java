@@ -4,8 +4,7 @@ import br.com.fiap.mba.persistence.spring.persistence.domain.Dto.ProdutoDto;
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Produto;
 import br.com.fiap.mba.persistence.spring.persistence.domain.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProdutoService {
@@ -18,7 +17,10 @@ public class ProdutoService {
 
     @Transactional
     public void cadastraProduto(ProdutoDto produtoDto) {
-        Produto produto = new Produto(produtoDto.getDescricao(), produtoDto.getValor());
+        Produto produto = new Produto();
+        produto.setDescricao(produtoDto.getDescricao());
+        produto.setValor(produtoDto.getValor());
         produtoRepository.save(produto);
     }
+    //TODO - Verificar porque não consigo usat o construtor.
 }

@@ -12,7 +12,7 @@ public class Pedido {
     @ManyToOne
     private Cliente cliente;
 
-    @ManyToMany
-    private List<ItemPedido> itens;
+//    @ManyToMany
+//    private List<ItemPedido> itens;
 
 }

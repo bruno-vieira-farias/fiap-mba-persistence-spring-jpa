@@ -1,0 +1,9 @@
+POST http://localhost:8080/cadastra-produto
+Content-Type: application/json
+
+{
+  "descricao": "produto_X",
+  "valor": 11.8
+}
+
+###
