@@ -1,11 +1,19 @@
-POST http://localhost:8080/cadastra-produto
+POST http://localhost:8080/api/produto/cadastra
 Content-Type: application/json
 
 {
   "codigo":"321A",
   "descricao": "produto_X",
-  "valor": 11.8,
-  "quantidadeEstoque": 20
+  "valor": 11.8
 }
+
+###
+
+GET http://localhost:8080/api/produto/busca-todos
+Accept: application/json
+
+###
+
+DELETE http://localhost:8080/api/produto/321A
 
 ###

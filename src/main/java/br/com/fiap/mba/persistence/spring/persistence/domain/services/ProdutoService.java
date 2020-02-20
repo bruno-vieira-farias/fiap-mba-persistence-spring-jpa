@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class ProdutoService {
@@ -21,20 +22,29 @@ public class ProdutoService {
     }
 
     @Transactional
-    //TODO - Verificar porque não consigo usat o construtor.
-    public void cadastraProduto(String codigo, String descricao, BigDecimal valor, Integer quantidadeEstoque) throws IllegalAccessException {
+    public void cadastraProduto(String codigo, String descricao, BigDecimal valor) throws IllegalAccessException {
         certificaQueProdutoPodeSerCadastrado(codigo);
 
         Produto produto = new Produto(codigo, descricao, valor);
         produtoRepository.save(produto);
 
-        ItemEstoque estoque =  new ItemEstoque(produto,quantidadeEstoque);
-        estoqueRepository.save(estoque);
+//        ItemEstoque estoque =  new ItemEstoque(produto,quantidadeEstoque);
+//        estoqueRepository.save(estoque);
+    }
+
+    public List<Produto> buscaTodosProdutos(){
+        return produtoRepository.findAll();
     }
 
     private void certificaQueProdutoPodeSerCadastrado(String codigo) throws IllegalAccessException {
         if (produtoRepository.findByCodigo(codigo) != null) {
-            throw new IllegalAccessException("O produto de codigo" + codigo + "já esta cadastrado.");
+            throw new IllegalAccessException("O produto de código" + codigo + "já esta cadastrado.");
         }
+    }
+
+    //Todo - Tratar para validar se o produto existe.
+    public void apagaProduto(String codigo) {
+        Produto produto = produtoRepository.findByCodigo(codigo);
+        produtoRepository.delete(produto);
     }
 }

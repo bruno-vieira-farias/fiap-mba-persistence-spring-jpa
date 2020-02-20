@@ -2,20 +2,18 @@ package br.com.fiap.mba.persistence.spring.persistence.entrypoints;
 
 import java.math.BigDecimal;
 
-public class ProdutoDto {
+public class ConsultaProdutoDto {
     private String codigo;
     private String descricao;
     private BigDecimal valor;
-    private Integer quantidadeEstoque;
 
-    public ProdutoDto() {
+    public ConsultaProdutoDto() {
     }
 
-    public ProdutoDto(String codigo, String descricao, BigDecimal valor, Integer quantidadeEstoque) {
+    public ConsultaProdutoDto(String codigo, String descricao, BigDecimal valor) {
         this.codigo = codigo;
         this.descricao = descricao;
         this.valor = valor;
-        this.quantidadeEstoque = quantidadeEstoque;
     }
 
     public String getCodigo() {
@@ -42,11 +40,4 @@ public class ProdutoDto {
         this.valor = valor;
     }
 
-    public Integer getQuantidadeEstoque() {
-        return quantidadeEstoque;
-    }
-
-    public void setQuantidadeEstoque(Integer quantidadeEstoque) {
-        this.quantidadeEstoque = quantidadeEstoque;
-    }
 }
