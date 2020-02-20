@@ -1,7 +1,9 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.entity;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 
 public class Pedido {

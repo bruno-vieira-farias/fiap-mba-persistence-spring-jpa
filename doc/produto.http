@@ -2,8 +2,10 @@ POST http://localhost:8080/cadastra-produto
 Content-Type: application/json
 
 {
+  "codigo":"321A",
   "descricao": "produto_X",
-  "valor": 11.8
+  "valor": 11.8,
+  "quantidadeEstoque": 20
 }
 
 ###
