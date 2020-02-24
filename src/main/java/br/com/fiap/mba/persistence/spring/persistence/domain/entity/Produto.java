@@ -26,6 +26,13 @@ public class Produto {
         this.valor = valor;
     }
 
+    public Produto(Integer id, String codigo, String descricao, BigDecimal valor) {
+        this.id = id;
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.valor = valor;
+    }
+
     public Produto(String descricao, BigDecimal valor) {
     }
 

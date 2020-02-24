@@ -1,16 +1,16 @@
-package br.com.fiap.mba.persistence.spring.persistence.entrypoints;
+package br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto;
 
 import java.math.BigDecimal;
 
-public class ConsultaProdutoDto {
+public class ProdutoDto {
     private String codigo;
     private String descricao;
     private BigDecimal valor;
 
-    public ConsultaProdutoDto() {
+    public ProdutoDto() {
     }
 
-    public ConsultaProdutoDto(String codigo, String descricao, BigDecimal valor) {
+    public ProdutoDto(String codigo, String descricao, BigDecimal valor) {
         this.codigo = codigo;
         this.descricao = descricao;
         this.valor = valor;

@@ -1,18 +1,19 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-
+@Entity
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String nome;
     private String cpf;
-    private String endereco;
+    @ManyToOne
+    private Endereco endereco;
+
+    public Cliente() {
+    }
 
     public Integer getId() {
         return id;
@@ -38,11 +39,11 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 }

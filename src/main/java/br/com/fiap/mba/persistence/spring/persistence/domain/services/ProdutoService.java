@@ -1,8 +1,6 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.services;
 
-import br.com.fiap.mba.persistence.spring.persistence.domain.entity.ItemEstoque;
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Produto;
-import br.com.fiap.mba.persistence.spring.persistence.domain.repository.EstoqueRepository;
 import br.com.fiap.mba.persistence.spring.persistence.domain.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,11 +12,9 @@ import java.util.List;
 public class ProdutoService {
 
     private final ProdutoRepository produtoRepository;
-    private final EstoqueRepository estoqueRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository, EstoqueRepository estoqueRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;
-        this.estoqueRepository = estoqueRepository;
     }
 
     @Transactional
@@ -27,24 +23,36 @@ public class ProdutoService {
 
         Produto produto = new Produto(codigo, descricao, valor);
         produtoRepository.save(produto);
-
-//        ItemEstoque estoque =  new ItemEstoque(produto,quantidadeEstoque);
-//        estoqueRepository.save(estoque);
     }
 
-    public List<Produto> buscaTodosProdutos(){
+    @Transactional
+    public List<Produto> buscaProdutos() {
         return produtoRepository.findAll();
+    }
+
+    public Produto buscaProduto(String codigo){
+        return produtoRepository.findByCodigo(codigo);
+    }
+
+    @Transactional
+    public void apagaProduto(String codigo) {
+        //Todo - Tratar para validar se o produto existe.
+        Produto produto = produtoRepository.findByCodigo(codigo);
+        produtoRepository.delete(produto);
+    }
+
+    @Transactional
+    public void alteraProduto(String codigo, String descricao, BigDecimal valor){
+        Produto produto = buscaProduto(codigo);
+        produto.setDescricao(descricao);
+        produto.setValor(valor);
+
+        produtoRepository.save(produto);
     }
 
     private void certificaQueProdutoPodeSerCadastrado(String codigo) throws IllegalAccessException {
         if (produtoRepository.findByCodigo(codigo) != null) {
             throw new IllegalAccessException("O produto de código" + codigo + "já esta cadastrado.");
         }
-    }
-
-    //Todo - Tratar para validar se o produto existe.
-    public void apagaProduto(String codigo) {
-        Produto produto = produtoRepository.findByCodigo(codigo);
-        produtoRepository.delete(produto);
     }
 }

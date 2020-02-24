@@ -8,4 +8,6 @@ public interface EstoqueRepository extends JpaRepository<ItemEstoque,Integer> {
 
     ItemEstoque findByProduto(Produto produto);
 
+    void removeItemEstoqueByProduto(Produto produto);
+
 }
