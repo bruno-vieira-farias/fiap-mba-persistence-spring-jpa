@@ -15,6 +15,12 @@ public class Cliente {
     public Cliente() {
     }
 
+    public Cliente(String nome, String cpf, Endereco endereco) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.endereco = endereco;
+    }
+
     public Integer getId() {
         return id;
     }

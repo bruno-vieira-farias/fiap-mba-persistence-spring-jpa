@@ -1,12 +1,10 @@
-package br.com.fiap.mba.persistence.spring.persistence.domain.entity;
+package br.com.fiap.mba.persistence.spring.persistence.domain.services;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Cliente;
 
-@Entity
-public class Endereco {
-    @Id
-    private String id;
+public class EspecificacaoCliente {
+    private String nome;
+    private String cpf;
     private String logradouro;
     private String numero;
     private String complemento;
@@ -14,10 +12,9 @@ public class Endereco {
     private String cidade;
     private String estado;
 
-    public Endereco() {
-    }
-
-    public Endereco(String logradouro, String numero, String complemento, String cep, String cidade, String estado) {
+    public EspecificacaoCliente(String nome, String cpf, String logradouro, String numero, String complemento, String cep, String cidade, String estado) {
+        this.nome = nome;
+        this.cpf = cpf;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -26,12 +23,20 @@ public class Endereco {
         this.estado = estado;
     }
 
-    public String getId() {
-        return id;
+    public String getNome() {
+        return nome;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getLogradouro() {

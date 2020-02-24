@@ -1,12 +1,6 @@
-package br.com.fiap.mba.persistence.spring.persistence.domain.entity;
+package br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
-public class Endereco {
-    @Id
-    private String id;
+public class EnderecoDto {
     private String logradouro;
     private String numero;
     private String complemento;
@@ -14,24 +8,13 @@ public class Endereco {
     private String cidade;
     private String estado;
 
-    public Endereco() {
-    }
-
-    public Endereco(String logradouro, String numero, String complemento, String cep, String cidade, String estado) {
+    public EnderecoDto(String logradouro, String numero, String complemento, String cep, String cidade, String estado) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.cep = cep;
         this.cidade = cidade;
         this.estado = estado;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getLogradouro() {
