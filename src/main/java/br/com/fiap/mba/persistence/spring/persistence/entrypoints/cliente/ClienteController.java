@@ -5,7 +5,8 @@ import br.com.fiap.mba.persistence.spring.persistence.domain.services.ClienteSer
 import br.com.fiap.mba.persistence.spring.persistence.domain.services.EspecificacaoCliente;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("cliente")
+@RestController
+@RequestMapping("/cliente")
 public class ClienteController {
 
     private final ClienteService clienteService;
@@ -14,7 +15,7 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @PostMapping("cadastra")
+    @PostMapping("/cadastra")
     public void cadastraCliente(@RequestBody ClienteDto clienteDto) {
         EspecificacaoCliente especificacaoCliente = new EspecificacaoCliente(
                 clienteDto.getNome(),
@@ -29,7 +30,7 @@ public class ClienteController {
         clienteService.cadastraCliente(especificacaoCliente);
     }
 
-    @GetMapping("busca/{cpf}")
+    @GetMapping("/busca/{cpf}")
     public ClienteDto buscaCliente(@PathVariable String cpf) {
         Cliente cliente = clienteService.buscaCliente(cpf);
         return new ClienteDto(
@@ -46,12 +47,12 @@ public class ClienteController {
         );
     }
 
-    @PutMapping("altera/{cpf}")
+    @PutMapping("/altera/{cpf}")
     public void alteraCliente(@RequestBody EspecificacaoCliente especificacaoCliente) {
         clienteService.alteraCliente(especificacaoCliente);
     }
 
-    @DeleteMapping("{cpf}")
+    @DeleteMapping("/{cpf}")
     public void removeCliente(@PathVariable String cpf) {
         clienteService.removeCliente(cpf);
     }

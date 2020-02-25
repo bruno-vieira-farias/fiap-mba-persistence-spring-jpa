@@ -19,6 +19,11 @@ public class Pedido {
     public Pedido() {
     }
 
+    public Pedido(Cliente cliente, List<ItemPedido> itens) {
+        this.cliente = cliente;
+        this.itens = itens;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -15,6 +15,14 @@ public class ItemPedido {
 
     private Integer quantidade;
 
+    public ItemPedido() {
+    }
+
+    public ItemPedido(Produto produto, Integer quantidade){
+        this.produto = produto;
+        this.quantidade = quantidade;
+    }
+
     public Integer getId() {
         return id;
     }

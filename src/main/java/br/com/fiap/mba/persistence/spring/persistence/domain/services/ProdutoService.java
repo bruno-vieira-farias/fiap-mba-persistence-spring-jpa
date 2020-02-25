@@ -30,6 +30,7 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
+    @Transactional
     public Produto buscaProduto(String codigo){
         return produtoRepository.findByCodigo(codigo);
     }

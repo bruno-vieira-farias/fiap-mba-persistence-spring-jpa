@@ -1,0 +1,17 @@
+POST http://localhost:8080/api/cliente/cadastra
+Content-Type: application/json
+
+{
+  "nome" : "Fulano da Silva",
+  "cpf" : "12345678945",
+  "endereco" : {
+    "logradouro": "Avenida Lins de Vasconcelos",
+    "numero" : 1222,
+    "complemento": "B",
+    "cep" : "03333222",
+    "cidade" : "São Paulo",
+    "estado" : "SP"
+  }
+}
+
+###

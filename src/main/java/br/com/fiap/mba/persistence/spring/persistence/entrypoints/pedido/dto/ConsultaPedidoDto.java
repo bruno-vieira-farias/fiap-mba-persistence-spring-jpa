@@ -1,18 +1,17 @@
-package br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido;
+package br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto;
 
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.ClienteDto;
-import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.ItemPedidoDto;
 
 import java.util.List;
 
-public class PedidoDto {
+public class ConsultaPedidoDto {
     private Integer id;
 
     private ClienteDto cliente;
 
-    private List<ItemPedidoDto> itens;
+    private List<ConsultaItemPedidoDto> itens;
 
-    public PedidoDto(Integer id, ClienteDto cliente, List<ItemPedidoDto> itens) {
+    public ConsultaPedidoDto(Integer id, ClienteDto cliente, List<ConsultaItemPedidoDto> itens) {
         this.id = id;
         this.cliente = cliente;
         this.itens = itens;
@@ -34,11 +33,11 @@ public class PedidoDto {
         this.cliente = cliente;
     }
 
-    public List<ItemPedidoDto> getItens() {
+    public List<ConsultaItemPedidoDto> getItens() {
         return itens;
     }
 
-    public void setItens(List<ItemPedidoDto> itens) {
+    public void setItens(List<ConsultaItemPedidoDto> itens) {
         this.itens = itens;
     }
 }

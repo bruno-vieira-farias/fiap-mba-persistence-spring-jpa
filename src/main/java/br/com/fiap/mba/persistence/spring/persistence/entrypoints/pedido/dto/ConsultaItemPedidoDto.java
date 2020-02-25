@@ -1,12 +1,12 @@
-package br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido;
+package br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto;
 
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto.ProdutoDto;
 
-public class ItemPedidoDto {
+public class ConsultaItemPedidoDto {
     private ProdutoDto item;
     private Integer quantidade;
 
-    public ItemPedidoDto(ProdutoDto item, Integer quantidade) {
+    public ConsultaItemPedidoDto(ProdutoDto item, Integer quantidade) {
         this.item = item;
         this.quantidade = quantidade;
     }

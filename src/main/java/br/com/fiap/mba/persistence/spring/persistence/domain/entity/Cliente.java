@@ -11,7 +11,7 @@ public class Cliente {
     private String nome;
     private String cpf;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Endereco endereco;
 
     public Cliente() {
