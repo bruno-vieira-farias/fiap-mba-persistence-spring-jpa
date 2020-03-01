@@ -1,10 +1,10 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.estoque;
 
-public class ItemEstoqueDto {
+public class EstoqueDto {
     private String codigoProduto;
     private Integer quantidade;
 
-    public ItemEstoqueDto(String codigoProduto, Integer quantidade) {
+    public EstoqueDto(String codigoProduto, Integer quantidade) {
         this.codigoProduto = codigoProduto;
         this.quantidade = quantidade;
     }

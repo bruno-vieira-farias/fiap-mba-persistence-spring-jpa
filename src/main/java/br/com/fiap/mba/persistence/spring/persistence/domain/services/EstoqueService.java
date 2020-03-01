@@ -6,6 +6,8 @@ import br.com.fiap.mba.persistence.spring.persistence.domain.repository.EstoqueR
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class EstoqueService {
     private final EstoqueRepository estoqueRepository;
@@ -31,10 +33,14 @@ public class EstoqueService {
         return estoqueRepository.findByProduto(produto);
     }
 
+    public List<Estoque> buscaEstoque(){
+        return estoqueRepository.findAll();
+    }
+
     @Transactional
     public void alteraQuantidadeEstoque(String codigoProduto, Integer quantidade) {
         Produto produto = produtoService.buscaProduto(codigoProduto);
-        certificaQueEstoquePodeSerAlterado(produto);
+        certificaQueEstoquePodeSerAlterado(produto, quantidade);
 
         Estoque estoque = estoqueRepository.findByProduto(produto);
         estoque.setQuantidade(quantidade);
@@ -48,23 +54,27 @@ public class EstoqueService {
         estoqueRepository.removeItemEstoqueByProduto(produto);
     }
 
-    private void certificaQueEstoquePodeSerCadastrado(Produto produto){
-        if (produto == null){
+    private void certificaQueEstoquePodeSerCadastrado(Produto produto) {
+        if (produto == null) {
             throw new IllegalArgumentException("O cadastro do estoque não pode ser realizado porque o produto ainda não foi cadastrado.");
         }
 
-        if (estoqueRepository.findByProduto(produto) != null){
+        if (estoqueRepository.findByProduto(produto) != null) {
             throw new IllegalArgumentException("O cadastro do estoque não pode ser realizado porque já existe este item no estoque.");
         }
     }
 
-    private void certificaQueEstoquePodeSerAlterado(Produto produto){
-        if (produto == null){
+    private void certificaQueEstoquePodeSerAlterado(Produto produto, Integer quantidade) {
+        if (produto == null) {
             throw new IllegalArgumentException("A alteracado no estoque não pode ser realizada porque o produto ainda não foi cadastrado.");
         }
 
-        if (estoqueRepository.findByProduto(produto) == null){
+        if (estoqueRepository.findByProduto(produto) == null) {
             throw new IllegalArgumentException("O alteracao no estoque não pode ser realizado porque ainda não existe este item no estoque.");
+        }
+
+        if (quantidade < 0) {
+            throw new IllegalArgumentException("O alteracao no estoque não pode ser realizado porque a quantidade não pode ser negativa.");
         }
     }
 }

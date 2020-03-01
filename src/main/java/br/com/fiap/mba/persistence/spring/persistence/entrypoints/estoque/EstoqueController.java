@@ -4,6 +4,9 @@ import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Estoque;
 import br.com.fiap.mba.persistence.spring.persistence.domain.services.EstoqueService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController()
 @RequestMapping("/estoque-produto")
 public class EstoqueController {
@@ -15,30 +18,45 @@ public class EstoqueController {
     }
 
     @PostMapping()
-    public void cadastraItemEstoque(@RequestBody ItemEstoqueDto itemEstoqueDto) {
-        estoqueService.cadastraEstoque(itemEstoqueDto.getCodigoProduto(), itemEstoqueDto.getQuantidade());
+    public void cadastraProdutoEstoque(@RequestBody EstoqueDto estoqueDto) {
+        estoqueService.cadastraEstoque(estoqueDto.getCodigoProduto(), estoqueDto.getQuantidade());
     }
 
     @GetMapping("{codigoProduto}")
-    public ItemEstoqueDto buscaEstoqueDoProduto(@PathVariable String codigoProduto) {
+    public EstoqueDto buscaEstoqueDoProduto(@PathVariable String codigoProduto) {
         Estoque estoque = estoqueService.buscaEstoqueDoProduto(codigoProduto);
 
         if (estoque == null){
             return null;
         }
 
-        return new ItemEstoqueDto(
+        return new EstoqueDto(
                 estoque.getProduto().getCodigo(),
                 estoque.getQuantidade());
     }
 
     @PutMapping()
-    public void alteraQuantidadeItemEstoque(@RequestBody ItemEstoqueDto itemEstoqueDto) {
-        estoqueService.alteraQuantidadeEstoque(itemEstoqueDto.getCodigoProduto(), itemEstoqueDto.getQuantidade());
+    public void alteraQuantidadeProdutoEstoque(@RequestBody EstoqueDto estoqueDto) {
+        estoqueService.alteraQuantidadeEstoque(estoqueDto.getCodigoProduto(), estoqueDto.getQuantidade());
     }
 
     @DeleteMapping("{codigoProduto}")
-    public void removeItemEstoque(@PathVariable String codigoProduto) {
+    public void removeProdutoEstoque(@PathVariable String codigoProduto) {
         estoqueService.removeItemEstoque(codigoProduto);
+    }
+
+    @GetMapping()
+    public List<EstoqueDto> buscaEstoqueDoProduto() {
+        List<Estoque> listaEstoque = estoqueService.buscaEstoque();
+
+        if (listaEstoque.isEmpty()){
+            return null;
+        }
+
+        return listaEstoque.stream().map(estoque ->
+                        new EstoqueDto(
+                                estoque.getProduto().getCodigo(),
+                                estoque.getQuantidade())
+                ).collect(Collectors.toList());
     }
 }
