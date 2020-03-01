@@ -45,6 +45,11 @@ public class ProdutoService {
     @Transactional
     public void alteraProduto(String codigo, String descricao, BigDecimal valor){
         Produto produto = buscaProduto(codigo);
+
+        if (produto == null) {
+            throw new IllegalArgumentException("O Produto que deseja alterar ainda não existe na base de dados.");
+        }
+
         produto.setDescricao(descricao);
         produto.setValor(valor);
 

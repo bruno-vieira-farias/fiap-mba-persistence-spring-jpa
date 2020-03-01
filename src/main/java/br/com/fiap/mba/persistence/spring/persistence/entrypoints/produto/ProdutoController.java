@@ -16,7 +16,7 @@ public class ProdutoController {
         this.produtoService = produtoService;
     }
 
-    @PostMapping("/cadastra")
+    @PostMapping()
     public void cadastraProduto(@RequestBody ProdutoDto produtoDto) {
         try {
             produtoService.cadastraProduto(
@@ -30,7 +30,7 @@ public class ProdutoController {
         }
     }
 
-    @GetMapping("/busca-todos")
+    @GetMapping()
     public List<ProdutoDto> buscaProdutos() {
         return produtoService.buscaProdutos().stream()
                 .map(produto ->
@@ -41,9 +41,13 @@ public class ProdutoController {
                 ).collect(Collectors.toList());
     }
 
-    @GetMapping("/busca/{codigo}")
+    @GetMapping("{codigo}")
     public ProdutoDto buscaProduto(@PathVariable String codigo) {
         Produto produto = produtoService.buscaProduto(codigo);
+
+        if (produto == null){
+            return null;
+        }
 
         return new ProdutoDto(
                 produto.getCodigo(),
@@ -51,7 +55,7 @@ public class ProdutoController {
                 produto.getValor());
     }
 
-    @PutMapping("/altera/{codigo}")
+    @PutMapping()
     public void alteraProduto(@RequestBody ProdutoDto produtoDto) {
         produtoService.alteraProduto(produtoDto.getCodigo(), produtoDto.getDescricao(), produtoDto.getValor());
     }

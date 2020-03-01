@@ -53,9 +53,7 @@ public class ClienteService {
     }
 
     private void certificaQueClientePodeSerCriado(EspecificacaoCliente especificacaoCliente) {
-        Cliente cliente = clienteRepository.findByCpf(especificacaoCliente.getCpf());
-
-        if (cliente != null) {
+        if (clienteRepository.findByCpf(especificacaoCliente.getCpf()) != null) {
             throw new IllegalArgumentException("Já existe um cliente com o cpf cadastrado.");
         }
     }
