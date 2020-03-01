@@ -10,25 +10,36 @@ import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.Con
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.ConsultaPedidoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.EmissaoPedidoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto.ProdutoDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/pedido")
 public class PedidoController {
-
     private final PedidoService pedidoService;
 
     public PedidoController(PedidoService pedidoService) {
-
         this.pedidoService = pedidoService;
     }
 
-    @GetMapping("consulta/{id}")
+    @PostMapping()
+    private void emitePedido(@RequestBody EmissaoPedidoDto emissaoPedidoDto) {
+        EspecificacaoPedido especificacaoPedido = new EspecificacaoPedido(
+                emissaoPedidoDto.getCpfCliente(),
+                emissaoPedidoDto.getEmissaoItemPedidoDtos().stream()
+                        .map(item -> new EspecificacaoItemPedido(
+                                        item.getCodigoProduto(),
+                                        item.getQuantidade()
+                                )
+                        ).collect(Collectors.toList())
+        );
+
+        pedidoService.emitePedido(especificacaoPedido);
+    }
+
+    @GetMapping("{id}")
     public ConsultaPedidoDto consultaPedido(Integer id) {
         Pedido pedido = pedidoService.consultaPedido(id);
         //Todo - Colocar este linguicao em um helper. Object mapper, convert...
@@ -63,19 +74,6 @@ public class PedidoController {
         );
     }
 
-    @PostMapping("emitePedido")
-    private void emitePedido(@RequestBody EmissaoPedidoDto emissaoPedidoDto) {
-        EspecificacaoPedido especificacaoPedido = new EspecificacaoPedido(
-                emissaoPedidoDto.getCpfCliente(),
-                emissaoPedidoDto.getEmissaoItemPedidoDtos().stream()
-                        .map(item -> new EspecificacaoItemPedido(
-                                        item.getCodigoProduto(),
-                                        item.getQuantidade()
-                                )
-                        ).collect(Collectors.toList())
-        );
 
-        pedidoService.emitePedido(especificacaoPedido);
-    }
 
 }
