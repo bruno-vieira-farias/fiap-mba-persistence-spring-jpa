@@ -54,6 +54,21 @@ public class EstoqueService {
         estoqueRepository.removeItemEstoqueByProduto(produto);
     }
 
+    @Transactional
+    public void consomeProdutoEstoque(Produto produto, Integer quantidadeConsumida) {
+        Estoque estoque = estoqueRepository.findByProduto(produto);
+
+        if (estoque == null){
+            throw new IllegalArgumentException("O produto ainda não possui estoque.");
+        }
+        
+        Integer quantidadeRestante = estoque.getQuantidade() - quantidadeConsumida;
+
+        estoque.setQuantidade(quantidadeRestante);
+        estoqueRepository.save(estoque);
+    }
+
+
     private void certificaQueEstoquePodeSerCadastrado(Produto produto) {
         if (produto == null) {
             throw new IllegalArgumentException("O cadastro do estoque não pode ser realizado porque o produto ainda não foi cadastrado.");
@@ -71,10 +86,6 @@ public class EstoqueService {
 
         if (estoqueRepository.findByProduto(produto) == null) {
             throw new IllegalArgumentException("O alteracao no estoque não pode ser realizado porque ainda não existe este item no estoque.");
-        }
-
-        if (quantidade < 0) {
-            throw new IllegalArgumentException("O alteracao no estoque não pode ser realizado porque a quantidade não pode ser negativa.");
         }
     }
 }

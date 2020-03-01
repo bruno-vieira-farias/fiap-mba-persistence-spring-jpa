@@ -43,6 +43,10 @@ public class Estoque {
     }
 
     public void setQuantidade(Integer quantidade) {
+        if (quantidade < 0) {
+            throw new IllegalArgumentException("O estoque de um produto não pode ser negativo.");
+        }
+
         this.quantidade = quantidade;
     }
 }

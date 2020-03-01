@@ -1,9 +1,9 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido;
 
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Pedido;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.EspecificacaoItemPedido;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.EspecificacaoPedido;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.PedidoService;
+import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.EspecificacaoItemPedido;
+import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.EspecificacaoPedido;
+import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.PedidoService;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.ClienteDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.EnderecoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.ConsultaItemPedidoDto;
@@ -28,7 +28,7 @@ public class PedidoController {
     private void emitePedido(@RequestBody EmissaoPedidoDto emissaoPedidoDto) {
         EspecificacaoPedido especificacaoPedido = new EspecificacaoPedido(
                 emissaoPedidoDto.getCpfCliente(),
-                emissaoPedidoDto.getEmissaoItemPedidoDtos().stream()
+                emissaoPedidoDto.getItensPedido().stream()
                         .map(item -> new EspecificacaoItemPedido(
                                         item.getCodigoProduto(),
                                         item.getQuantidade()
@@ -39,8 +39,8 @@ public class PedidoController {
         pedidoService.emitePedido(especificacaoPedido);
     }
 
-    @GetMapping("{id}")
-    public ConsultaPedidoDto consultaPedido(Integer id) {
+    @GetMapping("/{id}")
+    public ConsultaPedidoDto consultaPedido(@PathVariable Integer id) {
         Pedido pedido = pedidoService.consultaPedido(id);
         //Todo - Colocar este linguicao em um helper. Object mapper, convert...
         ClienteDto clienteDto = new ClienteDto(
@@ -73,7 +73,4 @@ public class PedidoController {
                 itensPedidoDto
         );
     }
-
-
-
 }

@@ -1,4 +1,4 @@
-package br.com.fiap.mba.persistence.spring.persistence.domain.services;
+package br.com.fiap.mba.persistence.spring.persistence.domain.services.cliente;
 
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Cliente;
 import br.com.fiap.mba.persistence.spring.persistence.domain.repository.ClienteRepository;

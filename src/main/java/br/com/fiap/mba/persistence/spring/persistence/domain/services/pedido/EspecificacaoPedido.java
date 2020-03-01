@@ -1,4 +1,4 @@
-package br.com.fiap.mba.persistence.spring.persistence.domain.services;
+package br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido;
 
 import java.util.List;
 

@@ -4,6 +4,9 @@ public class EmissaoItemPedidoDto {
     private String codigoProduto;
     private Integer quantidade;
 
+    public EmissaoItemPedidoDto() {
+    }
+
     public String getCodigoProduto() {
         return codigoProduto;
     }

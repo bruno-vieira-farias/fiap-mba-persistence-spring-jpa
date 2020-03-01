@@ -1,6 +1,4 @@
-package br.com.fiap.mba.persistence.spring.persistence.domain.services;
-
-import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Cliente;
+package br.com.fiap.mba.persistence.spring.persistence.domain.services.cliente;
 
 public class EspecificacaoCliente {
     private String nome;

@@ -1,8 +1,8 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente;
 
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Cliente;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.ClienteService;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.EspecificacaoCliente;
+import br.com.fiap.mba.persistence.spring.persistence.domain.services.cliente.ClienteService;
+import br.com.fiap.mba.persistence.spring.persistence.domain.services.cliente.EspecificacaoCliente;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

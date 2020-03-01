@@ -45,6 +45,7 @@ public class ProdutoController {
     public ProdutoDto buscaProduto(@PathVariable String codigo) {
         Produto produto = produtoService.buscaProduto(codigo);
 
+        //Todo fazer com que o serviço lance uma exceção caso não encontre.
         if (produto == null){
             return null;
         }

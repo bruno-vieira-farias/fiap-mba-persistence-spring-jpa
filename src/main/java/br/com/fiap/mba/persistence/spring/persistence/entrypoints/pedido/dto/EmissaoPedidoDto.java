@@ -4,7 +4,7 @@ import java.util.List;
 
 public class EmissaoPedidoDto {
     private String cpfCliente;
-    private List<EmissaoItemPedidoDto> emissaoItemPedidoDtos;
+    private List<EmissaoItemPedidoDto> itensPedido;
 
     public String getCpfCliente() {
         return cpfCliente;
@@ -14,11 +14,11 @@ public class EmissaoPedidoDto {
         this.cpfCliente = cpfCliente;
     }
 
-    public List<EmissaoItemPedidoDto> getEmissaoItemPedidoDtos() {
-        return emissaoItemPedidoDtos;
+    public List<EmissaoItemPedidoDto> getItensPedido() {
+        return itensPedido;
     }
 
-    public void setEmissaoItemPedidoDtos(List<EmissaoItemPedidoDto> emissaoItemPedidoDtos) {
-        this.emissaoItemPedidoDtos = emissaoItemPedidoDtos;
+    public void setItensPedido(List<EmissaoItemPedidoDto> itensPedido) {
+        this.itensPedido = itensPedido;
     }
 }
