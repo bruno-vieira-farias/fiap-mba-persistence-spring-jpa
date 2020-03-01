@@ -15,7 +15,7 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @PostMapping("/cadastra")
+    @PostMapping()
     public void cadastraCliente(@RequestBody ClienteDto clienteDto) {
         EspecificacaoCliente especificacaoCliente = new EspecificacaoCliente(
                 clienteDto.getNome(),
@@ -30,9 +30,14 @@ public class ClienteController {
         clienteService.cadastraCliente(especificacaoCliente);
     }
 
-    @GetMapping("/busca/{cpf}")
+    @GetMapping("/{cpf}")
     public ClienteDto buscaCliente(@PathVariable String cpf) {
         Cliente cliente = clienteService.buscaCliente(cpf);
+
+        if (cliente == null){
+            return null;
+        }
+
         return new ClienteDto(
                 cliente.getNome(),
                 cliente.getCpf(),
@@ -47,7 +52,7 @@ public class ClienteController {
         );
     }
 
-    @PutMapping("/altera/{cpf}")
+    @PutMapping()
     public void alteraCliente(@RequestBody EspecificacaoCliente especificacaoCliente) {
         clienteService.alteraCliente(especificacaoCliente);
     }

@@ -1,7 +1,6 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.services;
 
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Cliente;
-import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Endereco;
 import br.com.fiap.mba.persistence.spring.persistence.domain.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,28 +8,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ClienteService {
     private final ClienteRepository clienteRepository;
+    private final ClienteFactory clienteFactory;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, ClienteFactory clienteFactory) {
         this.clienteRepository = clienteRepository;
+        this.clienteFactory = clienteFactory;
     }
 
     @Transactional
     public void cadastraCliente(EspecificacaoCliente especificacaoCliente) {
-        Endereco endereco = new Endereco(
-                especificacaoCliente.getLogradouro(),
-                especificacaoCliente.getNumero(),
-                especificacaoCliente.getComplemento(),
-                especificacaoCliente.getCep(),
-                especificacaoCliente.getCidade(),
-                especificacaoCliente.getEstado()
-        );
+        certificaQueClientePodeSerCriado(especificacaoCliente);
 
-        Cliente cliente = new Cliente(
-                especificacaoCliente.getNome(),
-                especificacaoCliente.getCpf(),
-                endereco
-        );
-
+        Cliente cliente = clienteFactory.cria(especificacaoCliente);
         clienteRepository.save(cliente);
     }
 
@@ -40,8 +29,12 @@ public class ClienteService {
     }
 
     @Transactional
-    public void alteraCliente(EspecificacaoCliente especificacaoCliente){
+    public void alteraCliente(EspecificacaoCliente especificacaoCliente) {
         Cliente cliente = clienteRepository.findByCpf(especificacaoCliente.getCpf());
+
+        if (cliente == null) {
+            throw new IllegalArgumentException("O Cliente que deseja alterar não existe na base de dados.");
+        }
 
         cliente.setNome(especificacaoCliente.getNome());
         cliente.getEndereco().setLogradouro(especificacaoCliente.getLogradouro());
@@ -55,7 +48,15 @@ public class ClienteService {
     }
 
     @Transactional
-    public void removeCliente(String cpf){
+    public void removeCliente(String cpf) {
         clienteRepository.removeByCpf(cpf);
+    }
+
+    private void certificaQueClientePodeSerCriado(EspecificacaoCliente especificacaoCliente) {
+        Cliente cliente = clienteRepository.findByCpf(especificacaoCliente.getCpf());
+
+        if (cliente != null) {
+            throw new IllegalArgumentException("Já existe um cliente com o cpf cadastrado.");
+        }
     }
 }

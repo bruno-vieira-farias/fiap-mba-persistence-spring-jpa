@@ -1,4 +1,4 @@
-POST http://localhost:8080/api/cliente/cadastra
+POST http://localhost:8080/api/cliente
 Content-Type: application/json
 
 {
@@ -13,5 +13,32 @@ Content-Type: application/json
     "estado" : "SP"
   }
 }
+
+###
+
+GET http://localhost:8080/api/cliente/12345678945
+Accept: application/json
+
+###
+
+PUT http://localhost:8080/api/cliente
+Content-Type: application/json
+
+{
+  "nome" : "Fulano da Silva Sauro",
+  "cpf" : "12345678945",
+  "endereco" : {
+    "logradouro": "Avenida Lins de Vasconcelos",
+    "numero" : 1222,
+    "complemento": "BC",
+    "cep" : "03333222",
+    "cidade" : "São Paulo",
+    "estado" : "SP"
+  }
+}
+
+###
+
+DELETE http://localhost:8080/api/cliente/12345678945
 
 ###
