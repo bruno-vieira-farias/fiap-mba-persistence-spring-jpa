@@ -6,18 +6,18 @@ import javax.persistence.*;
  *  Representa cada produto no estoque.
  */
 @Entity
-public class ItemEstoque {
+public class Estoque {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @ManyToOne
+    @ManyToOne()
     private Produto produto;
     private Integer quantidade;
 
-    public ItemEstoque() {
+    public Estoque() {
     }
 
-    public ItemEstoque(Produto produto, Integer quantidade) {
+    public Estoque(Produto produto, Integer quantidade) {
         this.produto = produto;
         this.quantidade = quantidade;
     }

@@ -1,10 +1,11 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.estoque;
 
-import br.com.fiap.mba.persistence.spring.persistence.domain.entity.ItemEstoque;
+import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Estoque;
 import br.com.fiap.mba.persistence.spring.persistence.domain.services.EstoqueService;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/estoque")
+@RestController()
+@RequestMapping("/estoque-produto")
 public class EstoqueController {
 
     private final EstoqueService estoqueService;
@@ -13,27 +14,31 @@ public class EstoqueController {
         this.estoqueService = estoqueService;
     }
 
-    @PostMapping("adiciona")
-    public void cadastraItemEstoque(@RequestBody ItemEstoqueDto itemEstoqueDto){
-        estoqueService.cadastraItemEstoque(itemEstoqueDto.getCodigoProduto(), itemEstoqueDto.getQuantidade());
+    @PostMapping()
+    public void cadastraItemEstoque(@RequestBody ItemEstoqueDto itemEstoqueDto) {
+        estoqueService.cadastraEstoque(itemEstoqueDto.getCodigoProduto(), itemEstoqueDto.getQuantidade());
     }
 
-    @GetMapping("consulta/{codigoProduto}")
-    public ItemEstoqueDto consultaItemEstoque(@PathVariable String codigoProduto){
-        ItemEstoque itemEstoque = estoqueService.buscaItemEstoque(codigoProduto);
+    @GetMapping("{codigoProduto}")
+    public ItemEstoqueDto buscaEstoqueDoProduto(@PathVariable String codigoProduto) {
+        Estoque estoque = estoqueService.buscaEstoqueDoProduto(codigoProduto);
+
+        if (estoque == null){
+            return null;
+        }
+
         return new ItemEstoqueDto(
-                itemEstoque.getProduto().getCodigo(),
-                itemEstoque.getQuantidade());
+                estoque.getProduto().getCodigo(),
+                estoque.getQuantidade());
     }
 
-    @PutMapping("altera/{codigoProduto}")
-    public void alteraQuantidadeItemEstoque(@RequestBody ItemEstoqueDto itemEstoqueDto){
-        estoqueService.alteraQuantdadeItemEstoque(itemEstoqueDto.getCodigoProduto(), itemEstoqueDto.getQuantidade());
+    @PutMapping()
+    public void alteraQuantidadeItemEstoque(@RequestBody ItemEstoqueDto itemEstoqueDto) {
+        estoqueService.alteraQuantidadeEstoque(itemEstoqueDto.getCodigoProduto(), itemEstoqueDto.getQuantidade());
     }
 
     @DeleteMapping("{codigoProduto}")
-    public void removeItemEstoque(@PathVariable String codigoProduto){
+    public void removeItemEstoque(@PathVariable String codigoProduto) {
         estoqueService.removeItemEstoque(codigoProduto);
     }
-
 }

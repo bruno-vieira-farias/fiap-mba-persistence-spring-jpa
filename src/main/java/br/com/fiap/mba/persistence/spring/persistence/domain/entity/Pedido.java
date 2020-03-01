@@ -13,7 +13,7 @@ public class Pedido {
     @ManyToOne
     private Cliente cliente;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ItemPedido> itens;
 
     public Pedido() {

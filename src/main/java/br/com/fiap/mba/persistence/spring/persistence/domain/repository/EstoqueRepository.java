@@ -1,12 +1,12 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.repository;
 
-import br.com.fiap.mba.persistence.spring.persistence.domain.entity.ItemEstoque;
+import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Estoque;
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EstoqueRepository extends JpaRepository<ItemEstoque,Integer> {
+public interface EstoqueRepository extends JpaRepository<Estoque,Integer> {
 
-    ItemEstoque findByProduto(Produto produto);
+    Estoque findByProduto(Produto produto);
 
     void removeItemEstoqueByProduto(Produto produto);
 
