@@ -2,6 +2,10 @@ package br.com.fiap.mba.persistence.spring.persistence.domain.services;
 
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Estoque;
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Produto;
+import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoIndisponivelException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoJaPossuiEstoqueException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoNaoEncontradoException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoSemEstoqueException;
 import br.com.fiap.mba.persistence.spring.persistence.domain.repository.EstoqueRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +23,21 @@ public class EstoqueService {
     }
 
     @Transactional
-    public void cadastraEstoque(String codigoProduto, Integer quantidade) {
+    private Estoque buscaEstoqueDoProduto(Produto produto) throws ProdutoSemEstoqueException {
+        Estoque estoque = estoqueRepository.findByProduto(produto);
+        if(estoque == null)
+            throw new ProdutoSemEstoqueException(produto.getCodigo());
+        return estoque;
+    }
+
+    @Transactional
+    public Estoque buscaEstoqueDoProduto(String codigoProduto) throws ProdutoNaoEncontradoException, ProdutoSemEstoqueException {
+        Produto produto = produtoService.buscaProduto(codigoProduto);
+        return buscaEstoqueDoProduto(produto);
+    }
+
+    @Transactional
+    public void cadastraEstoque(String codigoProduto, Integer quantidade) throws ProdutoNaoEncontradoException, ProdutoJaPossuiEstoqueException {
         Produto produto = produtoService.buscaProduto(codigoProduto);
         certificaQueEstoquePodeSerCadastrado(produto);
 
@@ -27,65 +45,43 @@ public class EstoqueService {
         estoqueRepository.save(estoque);
     }
 
-    @Transactional
-    public Estoque buscaEstoqueDoProduto(String codigoProduto) {
-        Produto produto = produtoService.buscaProduto(codigoProduto);
-        return estoqueRepository.findByProduto(produto);
-    }
-
     public List<Estoque> buscaEstoque(){
         return estoqueRepository.findAll();
     }
 
     @Transactional
-    public void alteraQuantidadeEstoque(String codigoProduto, Integer quantidade) {
-        Produto produto = produtoService.buscaProduto(codigoProduto);
-        certificaQueEstoquePodeSerAlterado(produto, quantidade);
+    public void alteraQuantidadeEstoque(String codigoProduto, Integer quantidade) throws ProdutoNaoEncontradoException, ProdutoSemEstoqueException {
 
-        Estoque estoque = estoqueRepository.findByProduto(produto);
+        Estoque estoque = buscaEstoqueDoProduto(codigoProduto);
         estoque.setQuantidade(quantidade);
 
         estoqueRepository.save(estoque);
     }
 
     @Transactional
-    public void removeItemEstoque(String codigoProduto) {
+    public void removeItemEstoque(String codigoProduto) throws ProdutoNaoEncontradoException {
         Produto produto = produtoService.buscaProduto(codigoProduto);
+
         estoqueRepository.removeItemEstoqueByProduto(produto);
     }
 
     @Transactional
-    public void consomeProdutoEstoque(Produto produto, Integer quantidadeConsumida) {
-        Estoque estoque = estoqueRepository.findByProduto(produto);
-
-        if (estoque == null){
-            throw new IllegalArgumentException("O produto ainda não possui estoque.");
-        }
+    public void consomeProdutoEstoque(Produto produto, Integer quantidadeConsumida) throws ProdutoIndisponivelException, ProdutoSemEstoqueException {
+        Estoque estoque = buscaEstoqueDoProduto(produto);
         
         Integer quantidadeRestante = estoque.getQuantidade() - quantidadeConsumida;
+
+        if(quantidadeRestante < 0)
+            throw new ProdutoIndisponivelException(produto.getCodigo());
 
         estoque.setQuantidade(quantidadeRestante);
         estoqueRepository.save(estoque);
     }
 
 
-    private void certificaQueEstoquePodeSerCadastrado(Produto produto) {
-        if (produto == null) {
-            throw new IllegalArgumentException("O cadastro do estoque não pode ser realizado porque o produto ainda não foi cadastrado.");
-        }
-
+    private void certificaQueEstoquePodeSerCadastrado(Produto produto) throws ProdutoJaPossuiEstoqueException {
         if (estoqueRepository.findByProduto(produto) != null) {
-            throw new IllegalArgumentException("O cadastro do estoque não pode ser realizado porque já existe este item no estoque.");
-        }
-    }
-
-    private void certificaQueEstoquePodeSerAlterado(Produto produto, Integer quantidade) {
-        if (produto == null) {
-            throw new IllegalArgumentException("A alteracado no estoque não pode ser realizada porque o produto ainda não foi cadastrado.");
-        }
-
-        if (estoqueRepository.findByProduto(produto) == null) {
-            throw new IllegalArgumentException("O alteracao no estoque não pode ser realizado porque ainda não existe este item no estoque.");
+            throw new ProdutoJaPossuiEstoqueException(produto.getCodigo());
         }
     }
 }

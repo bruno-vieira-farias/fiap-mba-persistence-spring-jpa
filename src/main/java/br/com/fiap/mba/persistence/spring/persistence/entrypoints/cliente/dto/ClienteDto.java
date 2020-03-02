@@ -1,4 +1,4 @@
-package br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente;
+package br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.dto;
 
 public class ClienteDto {
     private String nome;

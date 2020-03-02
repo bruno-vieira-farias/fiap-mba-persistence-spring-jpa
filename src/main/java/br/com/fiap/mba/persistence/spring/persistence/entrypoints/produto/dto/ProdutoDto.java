@@ -1,4 +1,4 @@
-package br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto;
+package br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto.dto;
 
 import java.math.BigDecimal;
 
