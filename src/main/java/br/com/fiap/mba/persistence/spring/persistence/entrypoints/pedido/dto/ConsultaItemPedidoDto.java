@@ -1,6 +1,6 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto;
 
-import br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto.ProdutoDto;
+import br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto.dto.ProdutoDto;
 
 public class ConsultaItemPedidoDto {
     private ProdutoDto item;

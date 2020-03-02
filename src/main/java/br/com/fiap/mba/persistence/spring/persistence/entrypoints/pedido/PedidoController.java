@@ -1,22 +1,30 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido;
 
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Pedido;
+import br.com.fiap.mba.persistence.spring.persistence.domain.exception.PedidoInvalidoException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.exception.PedidoNaoEncontradoException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoIndisponivelException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoSemEstoqueException;
 import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.EspecificacaoItemPedido;
 import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.EspecificacaoPedido;
 import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.PedidoService;
-import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.ClienteDto;
-import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.EnderecoDto;
+import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.dto.ClienteDto;
+import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.dto.EnderecoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.ConsultaItemPedidoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.ConsultaPedidoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.EmissaoPedidoDto;
-import br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto.ProdutoDto;
+import br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto.dto.ProdutoDto;
+import io.swagger.annotations.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedido")
+@Api(description = "Entrypoint para manipulação de pedidos")
 public class PedidoController {
     private final PedidoService pedidoService;
 
@@ -25,7 +33,12 @@ public class PedidoController {
     }
 
     @PostMapping()
-    private void emitePedido(@RequestBody EmissaoPedidoDto emissaoPedidoDto) {
+    @ApiOperation(value="Realiza a emissão de um novo pedido")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Pedido gerado com sucesso"),
+            @ApiResponse(code = 400, message = "Pedido possui dados incorretos")})
+    @ResponseStatus(HttpStatus.CREATED)
+    public void emitePedido(@RequestBody EmissaoPedidoDto emissaoPedidoDto) {
         EspecificacaoPedido especificacaoPedido = new EspecificacaoPedido(
                 emissaoPedidoDto.getCpfCliente(),
                 emissaoPedidoDto.getItensPedido().stream()
@@ -36,41 +49,56 @@ public class PedidoController {
                         ).collect(Collectors.toList())
         );
 
-        pedidoService.emitePedido(especificacaoPedido);
+        try {
+            pedidoService.emitePedido(especificacaoPedido);
+        } catch (PedidoInvalidoException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value="Realiza a consulta de um pedido através do código de identificação")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Quantidade em estoque do produto alterada com sucesso"),
+            @ApiResponse(code = 404, message = "Pedido não encontrado")})
     public ConsultaPedidoDto consultaPedido(@PathVariable Integer id) {
-        Pedido pedido = pedidoService.consultaPedido(id);
-        //Todo - Colocar este linguicao em um helper. Object mapper, convert...
-        ClienteDto clienteDto = new ClienteDto(
-                pedido.getCliente().getNome(),
-                pedido.getCliente().getCpf(),
-                new EnderecoDto(
-                        pedido.getCliente().getEndereco().getLogradouro(),
-                        pedido.getCliente().getEndereco().getNumero(),
-                        pedido.getCliente().getEndereco().getComplemento(),
-                        pedido.getCliente().getEndereco().getCep(),
-                        pedido.getCliente().getEndereco().getCidade(),
-                        pedido.getCliente().getEndereco().getEstado()
-                )
-        );
 
-        List<ConsultaItemPedidoDto> itensPedidoDto = pedido.getItens().stream().map(item ->
-                new ConsultaItemPedidoDto(
-                        new ProdutoDto(
-                                item.getProduto().getCodigo(),
-                                item.getProduto().getDescricao(),
-                                item.getProduto().getValor()
-                        ),
-                        item.getQuantidade()
-                )
-        ).collect(Collectors.toList());
+        try {
+            Pedido pedido = pedidoService.consultaPedido(id);
+            //Todo - Colocar este linguicao em um helper. Object mapper, convert...
+            ClienteDto clienteDto = new ClienteDto(
+                    pedido.getCliente().getNome(),
+                    pedido.getCliente().getCpf(),
+                    new EnderecoDto(
+                            pedido.getCliente().getEndereco().getLogradouro(),
+                            pedido.getCliente().getEndereco().getNumero(),
+                            pedido.getCliente().getEndereco().getComplemento(),
+                            pedido.getCliente().getEndereco().getCep(),
+                            pedido.getCliente().getEndereco().getCidade(),
+                            pedido.getCliente().getEndereco().getEstado()
+                    )
+            );
 
-        return new ConsultaPedidoDto(
-                pedido.getId(),
-                clienteDto,
-                itensPedidoDto
-        );
+            List<ConsultaItemPedidoDto> itensPedidoDto = pedido.getItens().stream().map(item ->
+                    new ConsultaItemPedidoDto(
+                            new ProdutoDto(
+                                    item.getProduto().getCodigo(),
+                                    item.getProduto().getDescricao(),
+                                    item.getProduto().getValor()
+                            ),
+                            item.getQuantidade()
+                    )
+            ).collect(Collectors.toList());
+
+            return new ConsultaPedidoDto(
+                    pedido.getId(),
+                    clienteDto,
+                    itensPedidoDto
+            );
+        } catch (PedidoNaoEncontradoException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 }

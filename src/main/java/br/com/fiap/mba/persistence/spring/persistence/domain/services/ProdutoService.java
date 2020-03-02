@@ -1,7 +1,10 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.services;
 
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Produto;
+import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoJaCadastradoException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoNaoEncontradoException;
 import br.com.fiap.mba.persistence.spring.persistence.domain.repository.ProdutoRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +21,7 @@ public class ProdutoService {
     }
 
     @Transactional
-    public void cadastraProduto(String codigo, String descricao, BigDecimal valor) throws IllegalAccessException {
+    public void cadastraProduto(String codigo, String descricao, BigDecimal valor) throws ProdutoJaCadastradoException {
         certificaQueProdutoPodeSerCadastrado(codigo);
 
         Produto produto = new Produto(codigo, descricao, valor);
@@ -31,24 +34,25 @@ public class ProdutoService {
     }
 
     @Transactional
-    public Produto buscaProduto(String codigo){
-        return produtoRepository.findByCodigo(codigo);
+    public Produto buscaProduto(String codigo) throws ProdutoNaoEncontradoException {
+        Produto produto = produtoRepository.findByCodigo(codigo);
+
+        if (produto == null){
+            throw new ProdutoNaoEncontradoException(codigo);
+        }
+
+        return produto;
     }
 
     @Transactional
-    public void apagaProduto(String codigo) {
-        //Todo - Tratar para validar se o produto existe.
-        Produto produto = produtoRepository.findByCodigo(codigo);
+    public void apagaProduto(String codigo) throws ProdutoNaoEncontradoException {
+        Produto produto = buscaProduto(codigo);
         produtoRepository.delete(produto);
     }
 
     @Transactional
-    public void alteraProduto(String codigo, String descricao, BigDecimal valor){
+    public void alteraProduto(String codigo, String descricao, BigDecimal valor) throws ProdutoNaoEncontradoException{
         Produto produto = buscaProduto(codigo);
-
-        if (produto == null) {
-            throw new IllegalArgumentException("O Produto que deseja alterar ainda não existe na base de dados.");
-        }
 
         produto.setDescricao(descricao);
         produto.setValor(valor);
@@ -56,9 +60,9 @@ public class ProdutoService {
         produtoRepository.save(produto);
     }
 
-    private void certificaQueProdutoPodeSerCadastrado(String codigo) throws IllegalAccessException {
+    private void certificaQueProdutoPodeSerCadastrado(String codigo) throws ProdutoJaCadastradoException {
         if (produtoRepository.findByCodigo(codigo) != null) {
-            throw new IllegalAccessException("O produto de código" + codigo + "já esta cadastrado.");
+            throw new ProdutoJaCadastradoException(codigo);
         }
     }
 }

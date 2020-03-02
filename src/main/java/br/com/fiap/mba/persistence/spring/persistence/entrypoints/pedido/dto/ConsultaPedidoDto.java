@@ -1,6 +1,6 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto;
 
-import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.ClienteDto;
+import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.dto.ClienteDto;
 
 import java.util.List;
 

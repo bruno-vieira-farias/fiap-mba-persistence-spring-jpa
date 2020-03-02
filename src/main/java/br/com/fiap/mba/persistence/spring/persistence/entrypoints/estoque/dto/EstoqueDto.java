@@ -1,4 +1,4 @@
-package br.com.fiap.mba.persistence.spring.persistence.entrypoints.estoque;
+package br.com.fiap.mba.persistence.spring.persistence.entrypoints.estoque.dto;
 
 public class EstoqueDto {
     private String codigoProduto;
