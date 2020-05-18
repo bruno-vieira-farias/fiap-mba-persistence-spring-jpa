@@ -11,7 +11,7 @@
 - Swagger
 
 ### Run
-Execute na raiz do projeto a task `bootRun` do gradle.
+Execute na raiz do projeto a task `spring-boot:run` do maven.
 
 - Windows
   `mvnw spring-boot:run`
