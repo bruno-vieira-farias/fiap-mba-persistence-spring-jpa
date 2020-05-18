@@ -3,8 +3,6 @@ package br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido;
 import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Pedido;
 import br.com.fiap.mba.persistence.spring.persistence.domain.exception.PedidoInvalidoException;
 import br.com.fiap.mba.persistence.spring.persistence.domain.exception.PedidoNaoEncontradoException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoIndisponivelException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoSemEstoqueException;
 import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.EspecificacaoItemPedido;
 import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.EspecificacaoPedido;
 import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.PedidoService;
@@ -14,7 +12,10 @@ import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.Con
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.ConsultaPedidoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.EmissaoPedidoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto.dto.ProdutoDto;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,7 +25,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedido")
-@Api(description = "Entrypoint para manipulação de pedidos")
 public class PedidoController {
     private final PedidoService pedidoService;
 
@@ -66,7 +66,6 @@ public class PedidoController {
 
         try {
             Pedido pedido = pedidoService.consultaPedido(id);
-            //Todo - Colocar este linguicao em um helper. Object mapper, convert...
             ClienteDto clienteDto = new ClienteDto(
                     pedido.getCliente().getNome(),
                     pedido.getCliente().getCpf(),

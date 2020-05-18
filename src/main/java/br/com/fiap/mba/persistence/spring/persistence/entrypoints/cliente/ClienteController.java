@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/cliente")
-@Api(description = "Entrypoint para manipulação de clientes")
 public class ClienteController {
 
     private final ClienteService clienteService;

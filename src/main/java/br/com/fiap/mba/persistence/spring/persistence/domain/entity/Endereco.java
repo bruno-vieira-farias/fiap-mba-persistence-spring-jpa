@@ -1,16 +1,10 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
+@Embeddable
 public class Endereco {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
     private String logradouro;
     private String numero;
     private String complemento;
@@ -28,14 +22,6 @@ public class Endereco {
         this.cep = cep;
         this.cidade = cidade;
         this.estado = estado;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getLogradouro() {
@@ -91,8 +77,7 @@ public class Endereco {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Endereco endereco = (Endereco) o;
-        return Objects.equals(id, endereco.id) &&
-                Objects.equals(logradouro, endereco.logradouro) &&
+        return Objects.equals(logradouro, endereco.logradouro) &&
                 Objects.equals(numero, endereco.numero) &&
                 Objects.equals(complemento, endereco.complemento) &&
                 Objects.equals(cep, endereco.cep) &&
@@ -102,6 +87,6 @@ public class Endereco {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, logradouro, numero, complemento, cep, cidade, estado);
+        return Objects.hash(logradouro, numero, complemento, cep, cidade, estado);
     }
 }

@@ -10,13 +10,16 @@
 - Spring
 - Swagger
 
-## Executando o Projeto
+### Run
+Execute na raiz do projeto a task `bootRun` do gradle.
 
-Para executar o projeto....
-
-```
-git clone git@github.com:onurbasfar/fiap-mba-persistence-spring-jpa.git
-```
+- Windows
+  `mvnw spring-boot:run`
+- Linux / Mac
+  `./mvnw spring-boot:run`
+  
+### MER 
+![MER](/doc/images/MER.PNG)
 
 ## Issues
 [Issues](https://github.com/onurbasfar/fiap-mba-persistence-spring-jpa/issues)

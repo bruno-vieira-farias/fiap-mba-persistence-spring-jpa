@@ -4,7 +4,6 @@ import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Produto;
 import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoJaCadastradoException;
 import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoNaoEncontradoException;
 import br.com.fiap.mba.persistence.spring.persistence.domain.repository.ProdutoRepository;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

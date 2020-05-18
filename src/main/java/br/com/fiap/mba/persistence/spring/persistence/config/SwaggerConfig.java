@@ -1,6 +1,5 @@
 package br.com.fiap.mba.persistence.spring.persistence.config;
 
-import io.swagger.models.Contact;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;

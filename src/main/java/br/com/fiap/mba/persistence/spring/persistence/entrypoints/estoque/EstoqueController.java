@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 @RestController()
 @RequestMapping("/estoque-produto")
-@Api(description = "Entrypoint para manipulação dos estoques de produtos")
 public class EstoqueController {
 
     private final EstoqueService estoqueService;

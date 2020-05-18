@@ -1,6 +1,9 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class ClienteDto {
+    @ApiModelProperty(example = "Bruno Farias")
     private String nome;
     private String cpf;
     private EnderecoDto endereco;
