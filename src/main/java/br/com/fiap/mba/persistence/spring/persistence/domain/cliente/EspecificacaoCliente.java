@@ -1,6 +1,8 @@
-package br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.dto;
+package br.com.fiap.mba.persistence.spring.persistence.domain.cliente;
 
-public class EnderecoDto {
+public class EspecificacaoCliente {
+    private String nome;
+    private String cpf;
     private String logradouro;
     private Integer numero;
     private String complemento;
@@ -8,13 +10,31 @@ public class EnderecoDto {
     private String cidade;
     private String estado;
 
-    public EnderecoDto(String logradouro, Integer numero, String complemento, String cep, String cidade, String estado) {
+    public EspecificacaoCliente(String nome, String cpf, String logradouro, Integer numero, String complemento, String cep, String cidade, String estado) {
+        this.nome = nome;
+        this.cpf = cpf;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.cep = cep;
         this.cidade = cidade;
         this.estado = estado;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getLogradouro() {

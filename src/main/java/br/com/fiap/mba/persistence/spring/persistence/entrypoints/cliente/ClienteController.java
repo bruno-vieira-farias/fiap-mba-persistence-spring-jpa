@@ -1,10 +1,10 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente;
 
-import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Cliente;
-import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ClienteJaExisteException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ClienteNaoEncontradoException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.cliente.ClienteService;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.cliente.EspecificacaoCliente;
+import br.com.fiap.mba.persistence.spring.persistence.domain.cliente.Cliente;
+import br.com.fiap.mba.persistence.spring.persistence.domain.cliente.ClienteJaExisteException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.cliente.ClienteNaoEncontradoException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.cliente.ClienteService;
+import br.com.fiap.mba.persistence.spring.persistence.domain.cliente.EspecificacaoCliente;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.dto.ClienteDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.dto.EnderecoDto;
 import io.swagger.annotations.*;

@@ -1,6 +1,10 @@
-package br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.dto;
+package br.com.fiap.mba.persistence.spring.persistence.domain.cliente;
 
-public class EnderecoDto {
+import javax.persistence.*;
+import java.util.Objects;
+
+@Embeddable
+public class Endereco {
     private String logradouro;
     private Integer numero;
     private String complemento;
@@ -8,7 +12,10 @@ public class EnderecoDto {
     private String cidade;
     private String estado;
 
-    public EnderecoDto(String logradouro, Integer numero, String complemento, String cep, String cidade, String estado) {
+    public Endereco() {
+    }
+
+    public Endereco(String logradouro, Integer numero, String complemento, String cep, String cidade, String estado) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -63,5 +70,23 @@ public class EnderecoDto {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Endereco endereco = (Endereco) o;
+        return Objects.equals(logradouro, endereco.logradouro) &&
+                Objects.equals(numero, endereco.numero) &&
+                Objects.equals(complemento, endereco.complemento) &&
+                Objects.equals(cep, endereco.cep) &&
+                Objects.equals(cidade, endereco.cidade) &&
+                Objects.equals(estado, endereco.estado);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(logradouro, numero, complemento, cep, cidade, estado);
     }
 }

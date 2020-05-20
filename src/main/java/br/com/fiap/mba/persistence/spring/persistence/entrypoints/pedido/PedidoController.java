@@ -1,18 +1,17 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido;
 
-import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Pedido;
-import br.com.fiap.mba.persistence.spring.persistence.domain.exception.PedidoInvalidoException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.exception.PedidoNaoEncontradoException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.EspecificacaoItemPedido;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.EspecificacaoPedido;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.pedido.PedidoService;
+import br.com.fiap.mba.persistence.spring.persistence.domain.pedido.Pedido;
+import br.com.fiap.mba.persistence.spring.persistence.domain.pedido.PedidoInvalidoException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.pedido.PedidoNaoEncontradoException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.pedido.EspecificacaoItemPedido;
+import br.com.fiap.mba.persistence.spring.persistence.domain.pedido.EspecificacaoPedido;
+import br.com.fiap.mba.persistence.spring.persistence.domain.pedido.PedidoService;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.dto.ClienteDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.cliente.dto.EnderecoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.ConsultaItemPedidoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.ConsultaPedidoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.pedido.dto.EmissaoPedidoDto;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto.dto.ProdutoDto;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

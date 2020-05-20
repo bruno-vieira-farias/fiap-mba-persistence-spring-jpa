@@ -1,10 +1,10 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.estoque;
 
-import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Estoque;
-import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoJaPossuiEstoqueException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoNaoEncontradoException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoSemEstoqueException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.EstoqueService;
+import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.Estoque;
+import br.com.fiap.mba.persistence.spring.persistence.domain.produto.ProdutoJaPossuiEstoqueException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.produto.ProdutoNaoEncontradoException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.ProdutoSemEstoqueException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.EstoqueService;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.estoque.dto.EstoqueDto;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;

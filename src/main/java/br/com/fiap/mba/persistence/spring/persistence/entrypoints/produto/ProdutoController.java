@@ -1,9 +1,9 @@
 package br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto;
 
-import br.com.fiap.mba.persistence.spring.persistence.domain.entity.Produto;
-import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoJaCadastradoException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.exception.ProdutoNaoEncontradoException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.services.ProdutoService;
+import br.com.fiap.mba.persistence.spring.persistence.domain.produto.Produto;
+import br.com.fiap.mba.persistence.spring.persistence.domain.produto.ProdutoJaCadastradoException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.produto.ProdutoNaoEncontradoException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.produto.ProdutoService;
 import br.com.fiap.mba.persistence.spring.persistence.entrypoints.produto.dto.ProdutoDto;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
