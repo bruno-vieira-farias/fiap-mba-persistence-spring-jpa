@@ -1,9 +1,10 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.pedido;
 
-import br.com.fiap.mba.persistence.spring.persistence.domain.pedido.EspecificacaoItemPedido;
-
 import java.util.List;
 
+/**
+ * VO resposável por transferir as informaçoes entre outras camadas do sistema.
+ */
 public class EspecificacaoPedido {
     private String cpfCliente;
     private List<EspecificacaoItemPedido> especificacaoItemPedido;

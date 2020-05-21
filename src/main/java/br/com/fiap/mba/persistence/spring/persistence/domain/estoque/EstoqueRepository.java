@@ -1,6 +1,5 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.estoque;
 
-import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.Estoque;
 import br.com.fiap.mba.persistence.spring.persistence.domain.produto.Produto;
 import org.springframework.data.repository.CrudRepository;
 

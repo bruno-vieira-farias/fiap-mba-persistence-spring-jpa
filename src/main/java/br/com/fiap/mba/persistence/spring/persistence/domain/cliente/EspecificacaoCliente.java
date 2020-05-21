@@ -1,5 +1,8 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.cliente;
 
+/**
+ * VO resposável por transferir as informaçoes entre outras camadas do sistema.
+ */
 public class EspecificacaoCliente {
     private String nome;
     private String cpf;
