@@ -22,7 +22,7 @@ public class PedidoService {
     }
 
     @Transactional
-    public void emitePedido(EspecificacaoPedido especificacaoPedido) throws PedidoInvalidoException {
+    public Pedido emitePedido(EspecificacaoPedido especificacaoPedido) throws PedidoInvalidoException {
         try {
             Pedido pedido = pedidoFactory.criaPedido(especificacaoPedido);
 
@@ -30,7 +30,7 @@ public class PedidoService {
                     consomeProdutoEstoque(itemPedido);
             }
 
-            pedidoRepository.save(pedido);
+            return pedidoRepository.save(pedido);
         } catch (ProdutoIndisponivelException | ProdutoSemEstoqueException e) {
             throw new PedidoInvalidoException(e.getMessage());
         }

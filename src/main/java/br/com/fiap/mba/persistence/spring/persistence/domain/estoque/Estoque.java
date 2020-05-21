@@ -12,7 +12,7 @@ public class Estoque {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @ManyToOne()
+    @OneToOne()
     private Produto produto;
     private Integer quantidade;
 

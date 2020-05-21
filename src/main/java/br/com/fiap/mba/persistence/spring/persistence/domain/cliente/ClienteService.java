@@ -23,11 +23,11 @@ public class ClienteService {
     }
 
     @Transactional
-    public void cadastraCliente(EspecificacaoCliente especificacaoCliente) throws ClienteJaExisteException {
+    public Cliente cadastraCliente(EspecificacaoCliente especificacaoCliente) throws ClienteJaExisteException {
         certificaQueClientePodeSerCriado(especificacaoCliente);
 
         Cliente cliente = clienteFactory.cria(especificacaoCliente);
-        clienteRepository.save(cliente);
+        return clienteRepository.save(cliente);
     }
 
     @Transactional

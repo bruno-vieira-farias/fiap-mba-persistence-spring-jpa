@@ -20,11 +20,11 @@ public class ProdutoService {
     }
 
     @Transactional
-    public void cadastraProduto(String codigo, String descricao, BigDecimal valor) throws ProdutoJaCadastradoException {
+    public Produto cadastraProduto(String codigo, String descricao, BigDecimal valor) throws ProdutoJaCadastradoException {
         certificaQueProdutoPodeSerCadastrado(codigo);
 
         Produto produto = new Produto(codigo, descricao, valor);
-        produtoRepository.save(produto);
+        return produtoRepository.save(produto);
     }
 
     @Transactional

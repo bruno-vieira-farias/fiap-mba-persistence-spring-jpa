@@ -21,7 +21,7 @@ public class EstoqueService {
     }
 
     @Transactional
-    private Estoque buscaEstoqueDoProduto(Produto produto) throws ProdutoSemEstoqueException {
+    public Estoque buscaEstoqueDoProduto(Produto produto) throws ProdutoSemEstoqueException {
         Estoque estoque = estoqueRepository.findByProduto(produto);
         if(estoque == null)
             throw new ProdutoSemEstoqueException(produto.getCodigo());
@@ -35,12 +35,12 @@ public class EstoqueService {
     }
 
     @Transactional
-    public void cadastraEstoque(String codigoProduto, Integer quantidade) throws ProdutoNaoEncontradoException, ProdutoJaPossuiEstoqueException {
+    public Estoque cadastraEstoque(String codigoProduto, Integer quantidade) throws ProdutoNaoEncontradoException, ProdutoJaPossuiEstoqueException {
         Produto produto = produtoService.buscaProduto(codigoProduto);
         certificaQueEstoquePodeSerCadastrado(produto);
 
         Estoque estoque = new Estoque(produto, quantidade);
-        estoqueRepository.save(estoque);
+        return estoqueRepository.save(estoque);
     }
 
     public List<Estoque> buscaEstoque(){
