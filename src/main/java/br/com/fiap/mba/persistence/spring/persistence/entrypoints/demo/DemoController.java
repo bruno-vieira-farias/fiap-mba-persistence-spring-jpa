@@ -24,6 +24,11 @@ public class DemoController {
     private final EstoqueService estoqueService;
     private final PedidoService pedidoService;
 
+    private Cliente cliente;
+    private Produto produto;
+    private Estoque estoque;
+    private Pedido pedido;
+
     public DemoController(ClienteService clienteService, ProdutoService produtoService, EstoqueService estoqueService, PedidoService pedidoService) {
         this.clienteService = clienteService;
         this.produtoService = produtoService;
@@ -33,19 +38,31 @@ public class DemoController {
 
     @GetMapping()
     public ResultadoDemonstracaoDto handle() {
+        ResultadoDemonstracaoDto resultado = null;
+
         try {
-            Cliente cliente = cadastraClienteDemonstracao();
-            Produto produto = cadastraProdutoDemostracao();
-            Estoque estoque = cadastraEstoqueDemonstracao(produto);
-            Pedido pedido = emitePedidoDemonstracao(cliente, produto);
+            try {
+                cliente = cadastraClienteDemonstracao();
+                produto = cadastraProdutoDemostracao();
+                estoque = cadastraEstoqueDemonstracao(produto);
+                pedido = emitePedidoDemonstracao(cliente, produto);
 
-            ResultadoDemonstracaoDto resultado = new ResultadoDemonstracaoDto(cliente, produto, estoque, pedido);
+                resultado = new ResultadoDemonstracaoDto(cliente, produto, estoque, pedido);
 
-        } catch (Exception e) {
+            } catch (ClienteJaExisteException e) {
+                cliente = clienteService.buscaCliente("12345678910");
+                produto = produtoService.buscaProduto("5485");
+                estoque = estoqueService.buscaEstoqueDoProduto(produto);
+                pedido = pedidoService.consultaPedidoDoCliente(cliente).get(0);
+
+                resultado = new ResultadoDemonstracaoDto(cliente, produto, estoque, pedido);
+            }
+        }
+        catch (Exception e) {
             System.out.println("Ocorreu um erro ao tentar realizar a demonstração.");
         }
 
-        return null;
+        return resultado;
     }
 
     private Pedido emitePedidoDemonstracao(Cliente cliente, Produto produto) throws PedidoInvalidoException {

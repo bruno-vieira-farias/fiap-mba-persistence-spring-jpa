@@ -1,11 +1,13 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.pedido;
 
+import br.com.fiap.mba.persistence.spring.persistence.domain.cliente.Cliente;
 import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.EstoqueService;
 import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.ProdutoSemEstoqueException;
 import br.com.fiap.mba.persistence.spring.persistence.domain.produto.ProdutoIndisponivelException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,6 +45,16 @@ public class PedidoService {
 
         return pedido.get();
     }
+
+    @Transactional
+    public List<Pedido> consultaPedidoDoCliente(Cliente cliente) throws PedidoNaoEncontradoException {
+        List<Pedido> pedido = pedidoRepository.findByCliente(cliente);
+
+        if (pedido.isEmpty()) throw new PedidoNaoEncontradoException(1);
+
+        return pedido;
+    }
+
 
     private void consomeProdutoEstoque(ItemPedido itemPedido) throws ProdutoIndisponivelException, ProdutoSemEstoqueException {
         estoqueService.consomeProdutoEstoque(itemPedido.getProduto(),itemPedido.getQuantidade());
