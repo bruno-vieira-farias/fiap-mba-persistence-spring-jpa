@@ -1,4 +1,4 @@
-package br.com.fiap.mba.persistence.spring.persistence.entrypoints.demo.dao;
+package br.com.fiap.mba.persistence.spring.persistence.entrypoints.demo.dto;
 
 import br.com.fiap.mba.persistence.spring.persistence.domain.cliente.Cliente;
 import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.Estoque;

@@ -51,8 +51,7 @@ public class PedidoController {
         try {
             pedidoService.emitePedido(especificacaoPedido);
         } catch (PedidoInvalidoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -95,8 +94,7 @@ public class PedidoController {
                     itensPedidoDto
             );
         } catch (PedidoNaoEncontradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 }

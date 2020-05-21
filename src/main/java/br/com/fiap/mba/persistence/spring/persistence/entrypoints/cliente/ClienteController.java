@@ -44,8 +44,7 @@ public class ClienteController {
 
             clienteService.cadastraCliente(especificacaoCliente);
         } catch (ClienteJaExisteException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -72,8 +71,7 @@ public class ClienteController {
                     )
             );
         } catch (ClienteNaoEncontradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -86,8 +84,7 @@ public class ClienteController {
         try {
             clienteService.alteraCliente(especificacaoCliente);
         } catch (ClienteNaoEncontradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -100,8 +97,7 @@ public class ClienteController {
         try {
             clienteService.removeCliente(cpf);
         } catch (ClienteNaoEncontradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 }

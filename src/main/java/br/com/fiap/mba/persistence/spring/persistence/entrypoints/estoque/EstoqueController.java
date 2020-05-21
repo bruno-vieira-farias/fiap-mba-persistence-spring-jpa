@@ -35,11 +35,9 @@ public class EstoqueController {
         try {
             estoqueService.cadastraEstoque(estoqueDto.getCodigoProduto(), estoqueDto.getQuantidade());
         } catch (ProdutoNaoEncontradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (ProdutoJaPossuiEstoqueException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -63,8 +61,7 @@ public class EstoqueController {
                     estoque.getQuantidade());
 
         } catch (ProdutoSemEstoqueException | ProdutoNaoEncontradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -78,8 +75,7 @@ public class EstoqueController {
         try {
             estoqueService.alteraQuantidadeEstoque(estoqueDto.getCodigoProduto(), estoqueDto.getQuantidade());
         } catch (ProdutoSemEstoqueException | ProdutoNaoEncontradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -92,8 +88,7 @@ public class EstoqueController {
         try {
             estoqueService.removeItemEstoque(codigoProduto);
         } catch (ProdutoNaoEncontradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 

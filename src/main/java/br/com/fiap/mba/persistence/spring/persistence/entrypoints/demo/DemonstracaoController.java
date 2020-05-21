@@ -8,17 +8,22 @@ import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.Estoque;
 import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.EstoqueService;
 import br.com.fiap.mba.persistence.spring.persistence.domain.pedido.*;
 import br.com.fiap.mba.persistence.spring.persistence.domain.produto.*;
-import br.com.fiap.mba.persistence.spring.persistence.entrypoints.demo.dao.ResultadoDemonstracaoDto;
+import br.com.fiap.mba.persistence.spring.persistence.entrypoints.demo.dto.ResultadoDemonstracaoDto;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.Collections;
 
 @RestController
 @RequestMapping("/demonstracao")
-public class DemoController {
+public class DemonstracaoController {
     private final ClienteService clienteService;
     private final ProdutoService produtoService;
     private final EstoqueService estoqueService;
@@ -29,7 +34,7 @@ public class DemoController {
     private Estoque estoque;
     private Pedido pedido;
 
-    public DemoController(ClienteService clienteService, ProdutoService produtoService, EstoqueService estoqueService, PedidoService pedidoService) {
+    public DemonstracaoController(ClienteService clienteService, ProdutoService produtoService, EstoqueService estoqueService, PedidoService pedidoService) {
         this.clienteService = clienteService;
         this.produtoService = produtoService;
         this.estoqueService = estoqueService;
@@ -37,6 +42,10 @@ public class DemoController {
     }
 
     @GetMapping()
+    @ApiOperation(value="Realiza um demonstração com as principais operações da API.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Demonstraçãp realizada com sucesso"),
+            @ApiResponse(code = 500, message = "Erro ao tentar realizar a demonstração")})
     public ResultadoDemonstracaoDto handle() {
         ResultadoDemonstracaoDto resultado = null;
 
@@ -59,7 +68,7 @@ public class DemoController {
             }
         }
         catch (Exception e) {
-            System.out.println("Ocorreu um erro ao tentar realizar a demonstração.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Ocorreu um erro ao tentar realizar a demonstração.");
         }
 
         return resultado;

@@ -37,8 +37,7 @@ public class ProdutoController {
                     produtoDto.getValor()
             );
         } catch (ProdutoJaCadastradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -71,8 +70,7 @@ public class ProdutoController {
                     produto.getDescricao(),
                     produto.getValor());
         } catch (ProdutoNaoEncontradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -85,8 +83,7 @@ public class ProdutoController {
         try{
             produtoService.alteraProduto(produtoDto.getCodigo(), produtoDto.getDescricao(), produtoDto.getValor());
         } catch (ProdutoNaoEncontradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -99,8 +96,7 @@ public class ProdutoController {
         try{
             produtoService.apagaProduto(codigo);
         } catch (ProdutoNaoEncontradoException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 }
