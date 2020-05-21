@@ -1,9 +1,8 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.pedido;
 
-import br.com.fiap.mba.persistence.spring.persistence.domain.pedido.*;
-import br.com.fiap.mba.persistence.spring.persistence.domain.produto.ProdutoIndisponivelException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.ProdutoSemEstoqueException;
 import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.EstoqueService;
+import br.com.fiap.mba.persistence.spring.persistence.domain.estoque.ProdutoSemEstoqueException;
+import br.com.fiap.mba.persistence.spring.persistence.domain.produto.ProdutoIndisponivelException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

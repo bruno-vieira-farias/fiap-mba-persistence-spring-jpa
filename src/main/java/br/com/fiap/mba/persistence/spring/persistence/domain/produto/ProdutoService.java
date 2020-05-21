@@ -1,9 +1,5 @@
 package br.com.fiap.mba.persistence.spring.persistence.domain.produto;
 
-import br.com.fiap.mba.persistence.spring.persistence.domain.produto.Produto;
-import br.com.fiap.mba.persistence.spring.persistence.domain.produto.ProdutoJaCadastradoException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.produto.ProdutoNaoEncontradoException;
-import br.com.fiap.mba.persistence.spring.persistence.domain.produto.ProdutoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
