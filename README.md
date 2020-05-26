@@ -1,15 +1,15 @@
 # Java Persistence
 
- Trabalho final para a disciplina de Persistência em Spring Data JPA com Mysql mininstrada por Prof. MSc. Rafael Matsuyama. <p>
+ Trabalho final para a disciplina de Persistência em Spring Data JPA com Mysql mininstrada pelo Prof. MSc. Rafael Matsuyama. <p>
  
- O projeto foi desenvolvido utilizando algumas tecnicas do DDD, em que se busca umq clareza
- nos conceitos do dominio e sua independencia entre as demais camadas
+ O projeto foi desenvolvido utilizando algumas técnicas do DDD, em que se busca uma clareza
+ nos conceitos do domínio e sua independência entre as demais camadas
  do sistema.<p>
- Os dos pacotes do dominio foram agrupados por entidades, assim, as classes que tentem a 
- serem alteradas com a mesma frequência ficam próximas, facilitando as manutenções.<p>
+ Os dos pacotes do domínio foram agrupados por entidades, assim as classes que tendem a 
+ ser alteradas com a mesma frequência ficam próximas, facilitando as manutenções.<p>
  Foi utilizado o Spring boot que além de robusto possui uma utilização simples e ágil.<p>
  Foram criadas as entidades Cliente, Produto, Estoque com seus respectivos CRUDs 
- e a entidade Pedido com suas ações especificas.<p>
+ e a entidade Pedido com suas ações específicas.<p>
  Foram disponibilizados endpoints http que podem ser consultados pelo swagger.<p> 
 
 ### MER 
